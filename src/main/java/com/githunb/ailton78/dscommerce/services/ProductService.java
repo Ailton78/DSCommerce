@@ -1,6 +1,7 @@
 package com.githunb.ailton78.dscommerce.services;
 
 import com.githunb.ailton78.dscommerce.dto.ProductDTO;
+import com.githunb.ailton78.dscommerce.dto.ProductMinDTO;
 import com.githunb.ailton78.dscommerce.entities.Product;
 import com.githunb.ailton78.dscommerce.repositories.ProductRepository;
 import com.githunb.ailton78.dscommerce.services.exceptions.DatabaseException;
@@ -27,9 +28,9 @@ public class ProductService {
     return new ProductDTO(product);
     }
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAll(String name, Pageable pageable){
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable){
        Page<Product> result= repository.searchByName(name, pageable);
-        return result.map(ProductDTO::new);
+        return result.map(ProductMinDTO::new);
     }
     @Transactional
     public ProductDTO insert(ProductDTO dto){
