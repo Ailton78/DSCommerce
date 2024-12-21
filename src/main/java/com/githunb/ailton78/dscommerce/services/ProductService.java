@@ -1,7 +1,9 @@
 package com.githunb.ailton78.dscommerce.services;
 
+import com.githunb.ailton78.dscommerce.dto.CategoryDTO;
 import com.githunb.ailton78.dscommerce.dto.ProductDTO;
 import com.githunb.ailton78.dscommerce.dto.ProductMinDTO;
+import com.githunb.ailton78.dscommerce.entities.Category;
 import com.githunb.ailton78.dscommerce.entities.Product;
 import com.githunb.ailton78.dscommerce.repositories.ProductRepository;
 import com.githunb.ailton78.dscommerce.services.exceptions.DatabaseException;
@@ -70,6 +72,12 @@ public class ProductService {
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+        entity.getCategories().clear();
+        for(CategoryDTO catDto : dto.getCategories()){
+            Category cat = new Category();
+            cat.setId(catDto.getId());
+            entity.getCategories().add(cat);
+        }
     }
 
 
