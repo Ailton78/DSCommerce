@@ -3,6 +3,7 @@ package com.githunb.ailton78.dscommerce.controllers.handlers;
 import com.githunb.ailton78.dscommerce.dto.CustomError;
 import com.githunb.ailton78.dscommerce.dto.ValidationError;
 import com.githunb.ailton78.dscommerce.services.exceptions.DatabaseException;
+import com.githunb.ailton78.dscommerce.services.exceptions.ForbiddenException;
 import com.githunb.ailton78.dscommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,14 @@ public class ControllerExceptionHandler {
             err.addError(f.getField(), f.getDefaultMessage());
         }
 
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> Forbidden(ForbiddenException e,
+                                                HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }
